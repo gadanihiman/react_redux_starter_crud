@@ -4,7 +4,9 @@ import './App.css';
 import { Provider } from 'react-redux';
 
 import Posts from './components/Posts';
-import PostForm from './components/Postform';
+import Companies from './components/Companies';
+import OfficeForm from './components/OfficeForm';
+import CompanyForm from './components/CompanyForm';
 
 import store from './store';
 
@@ -17,9 +19,15 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to React</h1>
           </header>
-          <PostForm />
+          <div style={{ display: 'inline-block', width: '45%' }}>
+            <CompanyForm />
+          </div>
+          <div style={{ display: 'inline-block', width: '45%', marginRight: '20px' }}>
+            <OfficeForm />
+          </div>
           <hr />
-          <Posts />
+          <Companies />
+          {/* <Posts /> */}
         </div>
       </Provider>
     );

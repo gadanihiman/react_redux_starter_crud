@@ -21,6 +21,7 @@ class Posts extends Component {
         <p>{post.body}</p>
       </div>
     ));
+    
     return (
       <div>
         <h1>Posts</h1>
