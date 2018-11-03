@@ -25,7 +25,6 @@ class App extends Component {
           <div style={{ display: 'inline-block', width: '45%', marginRight: '20px' }}>
             <OfficeForm />
           </div>
-          <hr />
           <Companies />
           {/* <Posts /> */}
         </div>

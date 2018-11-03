@@ -11,15 +11,8 @@ class Companies extends Component {
     this.props.fetchPosts();
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
-    if (nextProps.newCompany) {
-      this.props.posts.unshift(nextProps.newCompany);
-    }
-  }
-
   render() {
-    const postItems = this.props.posts.map((post, index) => (
+    const postItems = this.props.posts.map((post, index) => 
       <Card 
         key={index} 
         style={{ 
@@ -53,17 +46,15 @@ class Companies extends Component {
             {post.phone}
           </Typography>
         </CardContent>
-      </Card> 
-      // <div key={post.id}>
-      //   <h3>{post.title}</h3>
-      //   <p>{post.body}</p>
-      // </div>
-    ));
-    
+      </Card>
+    );
+
     return (
       <div>
         <h1>Companies</h1>
-        {postItems}
+        {this.props.posts.length > 0 
+          ? postItems 
+          : <h3>There is no office created yet</h3>}
       </div>
     );
   }

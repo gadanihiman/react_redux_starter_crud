@@ -23,8 +23,24 @@ class OfficeForm extends Component {
     long: '',
     location: {},
     date: '2018-11-02',
-    company: ''
+    company: '',
   };
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('nextProps', nextProps);
+  //   console.log('this.props.companies', this.props.companies);
+  //   console.log('nextState', nextState);
+  //   console.log('nextProps.newCompany', nextProps.newCompany);
+  //   return nextProps.newCompany && nextProps.companies !== this.props.companies;
+  // }
+
+  componentWillUpdate(nextProps) {
+    console.log('willupdate nextProps', nextProps);
+    if (nextProps.newCompany.response) {
+      this.props.companies.unshift(nextProps.newCompany);
+      this.props.companies.map(company => company.response = null);
+    }
+  }
 
   onChange = e => 
     this.setState({ [e.target.name]: e.target.value });
@@ -46,7 +62,10 @@ class OfficeForm extends Component {
   }
 
   render() {
-    const { name, lat, long, date, company} = this.state;
+    const { name, lat, long, date, company } = this.state;
+    const listCompany = this.props.companies.map((company, index) => 
+      <MenuItem key={index} value={company.name}>{company.name}</MenuItem>);
+
     return (
       <div>
         <h2 style={{ marginBottom: '5px' }}>Create Office</h2>
@@ -114,9 +133,7 @@ class OfficeForm extends Component {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {listCompany}
             </Select>
           </FormControl>
           <br/>
@@ -131,7 +148,14 @@ class OfficeForm extends Component {
 }
 
 OfficeForm.propTypes = {
-  createCompany: PropTypes.func.isRequired
+  createCompany: PropTypes.func.isRequired,
+  companies: PropTypes.array.isRequired,
+  newCompany: PropTypes.object
 };
 
-export default connect(null, { createCompany })(OfficeForm);
+const mapStateToProps = state => ({
+  companies: state.posts.items,
+  newCompany: state.posts.item
+});
+
+export default connect(mapStateToProps, { createCompany })(OfficeForm);
