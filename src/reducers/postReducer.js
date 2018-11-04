@@ -1,8 +1,10 @@
-import { FETCH_POSTS, NEW_POST } from '../actions/types';
+import { FETCH_POSTS, NEW_COMPANY_POST, NEW_OFFICE_POST } from '../actions/types';
 
 const initialState = {
   items: [],
-  item: {}
+  item: {},
+  offices: localStorage.getItem('offices') || [],
+  office: {}
 };
 
 export default function(state = initialState, action) {
@@ -12,10 +14,15 @@ export default function(state = initialState, action) {
         ...state,
         items: action.payload
       };
-    case NEW_POST:
+    case NEW_COMPANY_POST:
       return {
         ...state,
         item: action.payload
+      };
+    case NEW_OFFICE_POST:
+      return {
+        ...state,
+        office: action.payload
       };
     default:
       return state;

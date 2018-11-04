@@ -18,9 +18,11 @@ const styles = {
   },
 };
 
+const uuidv1 = require('uuid/v1');
+
 class CompanyForm extends Component {
   state = {
-    openSnackbar: false,
+    open: false,
     vertical: 'top',
     horizontal: 'center',
     errMessage: 'Error',
@@ -47,16 +49,20 @@ class CompanyForm extends Component {
           status : 'error'
         }
       : `Company ${name} created!`;
-
+      
+    let id = uuidv1();
     const post = {
-      name, address,
+      id, name, address,
       revenue, phone,
       response
     };
 
+    setTimeout(() => this.setState({ open: false }), 5000)
+
     return (post.response.hasOwnProperty('status'))
       ? this.handleError(response)
       : this.postCompany(post);
+
   }
 
   revenueValidation = inputStateName =>  {
@@ -192,7 +198,6 @@ class CompanyForm extends Component {
             ContentProps={{ 'aria-describedby': 'message-id' }}
             message={<span id="message-id">{errMessage}</span>}
           />
-          {/* <button type="submit">Submit</button> */}
         </form>
       </div>
     );

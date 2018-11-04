@@ -3,10 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import { Provider } from 'react-redux';
 
-import Posts from './components/Posts';
-import Companies from './components/Companies';
-import OfficeForm from './components/OfficeForm';
-import CompanyForm from './components/CompanyForm';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+import Company from './Container/Company/Company';
+import Office from './Container/Office/Office';
 
 import store from './store';
 
@@ -14,20 +14,16 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <div style={{ display: 'inline-block', width: '45%' }}>
-            <CompanyForm />
+        <BrowserRouter>
+          <div className="App">
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <h1 className="App-title">Welcome to React</h1>
+            </header>
+            <Route path='/' exact component={Company}/>
+            <Route path='/office' exact component={Office}/>
           </div>
-          <div style={{ display: 'inline-block', width: '45%', marginRight: '20px' }}>
-            <OfficeForm />
-          </div>
-          <Companies />
-          {/* <Posts /> */}
-        </div>
+        </BrowserRouter>
       </Provider>
     );
   }

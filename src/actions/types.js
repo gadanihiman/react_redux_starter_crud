@@ -1,2 +1,3 @@
 export const FETCH_POSTS = 'FETCH_POSTS';
-export const NEW_POST = 'NEW_POST';
+export const NEW_COMPANY_POST = 'NEW_COMPANY_POST';
+export const NEW_OFFICE_POST = 'NEW_OFFICE_POST';
