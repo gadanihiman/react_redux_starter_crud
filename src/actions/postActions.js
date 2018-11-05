@@ -1,5 +1,4 @@
 import { FETCH_POSTS, NEW_COMPANY_POST, NEW_OFFICE_POST } from './types';
-import { array } from 'prop-types';
 
 export const fetchPosts = () => dispatch => {
   dispatch({
