@@ -96,6 +96,7 @@ class CompanyForm extends Component {
     return valMessage;
   }
 
+  // function for send body data to redux action
   postCompany = postData => {
     // reset input data state
     this.setState({
@@ -111,6 +112,7 @@ class CompanyForm extends Component {
     this.props.createCompany(postData);
   }
 
+  // handle error message
   handleError = errResponse => {
     this.setState({errResponse})
     // show single first error message with snackbar alert
