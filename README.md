@@ -170,6 +170,28 @@ export const createCompany = companiesData => dispatch => {
 };
 
 ```
+## Routing
+
+It has two routes.
+
+First Route :
+> You can go visit the [Demo Website](https://gadanigurusinga.github.io) for the homepage
+
+Second Route : 
+
+### notes
+If you go directly to visit second route like this
+> Offices page [https://gadanigurusinga.github.io/office](https://gadanigurusinga.github.io/office)
+You will got PAGE NOT FOUND.
+
+### Solution
+You can go for the next page by CLICK one of the company Card that has CREATED by Create new company here.
+> [Company Form](https://gadanigurusinga.github.io)
+
+Then you select one the company card, and you got the details and all the offices of the company.
+
+
+
 
 And at the end
 
