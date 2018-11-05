@@ -26,13 +26,14 @@ export const createCompany = companiesData => dispatch => {
 
 export const createOffice = officeData => dispatch => {
   let officeStorageData = JSON.parse(localStorage.getItem('Offices'));
-  console.log('officeStorageData', officeStorageData);
   if(!officeStorageData) {
     let emptyArr = [officeData];
     localStorage.setItem("Offices", JSON.stringify(emptyArr));
   } else if (officeStorageData.length > 0) {
     officeStorageData.unshift(officeData);
     localStorage.setItem("Offices", JSON.stringify(officeStorageData));
+  } else if (officeStorageData.length === 0) {
+    localStorage.setItem("Offices", JSON.stringify(officeData));
   }
   dispatch({
     type: NEW_OFFICE_POST,
