@@ -17,6 +17,8 @@ const styles = {
   }
 };
 
+const uuidv1 = require('uuid/v1');
+
 class OfficeForm extends Component {
   state = {
     open: false,
@@ -55,9 +57,10 @@ class OfficeForm extends Component {
           status : 'error'
         }
       : `Office ${name} created!`;
-
+    
+    let id = uuidv1();    
     const post = {
-      name,
+      id, name,
       location: {
         lat,
         long

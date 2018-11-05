@@ -62,7 +62,6 @@ class CompanyForm extends Component {
     return (post.response.hasOwnProperty('status'))
       ? this.handleError(response)
       : this.postCompany(post);
-
   }
 
   revenueValidation = inputStateName =>  {
