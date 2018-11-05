@@ -33,13 +33,14 @@ class CompanyForm extends Component {
     errResponse: {}
   };
   
+  // function for change state when typing
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-  onChange = e => 
-    this.setState({ [e.target.name]: e.target.value });
-
+  // handle submit form
   onSubmit = e => {
     e.preventDefault();
     const { name, address, revenue, phone } = this.state;
+    // check validation for every input    
     let response = (name === '' || address === '' || this.phoneValidation(phone) || this.revenueValidation(revenue))
       ? {
           errName : (name === '') ? 'Name is required' : null,
@@ -49,21 +50,27 @@ class CompanyForm extends Component {
           status : 'error'
         }
       : `Company ${name} created!`;
-      
+
+    // make new id from uuid package      
     let id = uuidv1();
+    // create body post
     const post = {
       id, name, address,
       revenue, phone,
       response
     };
 
+    // make time for showing out the modal
     setTimeout(() => this.setState({ open: false }), 5000)
-
+    
+    // check if there's a 'status' property it will handle all each error message, 
+    // otherwise it will send data
     return (post.response.hasOwnProperty('status'))
       ? this.handleError(response)
       : this.postCompany(post);
   }
 
+  // set revenue validation rules
   revenueValidation = inputStateName =>  {
     var valMessage = null;
     if (inputStateName === '') {
@@ -76,6 +83,7 @@ class CompanyForm extends Component {
     return valMessage;
   }
 
+  // set phone validation rules
   phoneValidation = inputStateName =>  {
     var valMessage = null;
     if (inputStateName === '') {

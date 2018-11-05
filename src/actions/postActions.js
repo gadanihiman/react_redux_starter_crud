@@ -9,8 +9,9 @@ export const fetchPosts = () => dispatch => {
 };
 
 export const createCompany = companiesData => dispatch => {
+  // get all companies from storage
   let companyStorageData = JSON.parse(localStorage.getItem('Companies'));
-  console.log('companyStorageData', companyStorageData);
+  // checking data for different actions
   if(!companyStorageData) {
     let emptyArr = [companiesData];
     localStorage.setItem("Companies", JSON.stringify(emptyArr));
@@ -18,6 +19,7 @@ export const createCompany = companiesData => dispatch => {
     companyStorageData.unshift(companiesData);
     localStorage.setItem("Companies", JSON.stringify(companyStorageData));
   }
+  // dispatch the action
   dispatch({
     type: NEW_COMPANY_POST,
     payload: companiesData
@@ -25,7 +27,9 @@ export const createCompany = companiesData => dispatch => {
 };
 
 export const createOffice = officeData => dispatch => {
+  // get all offices data from storage
   let officeStorageData = JSON.parse(localStorage.getItem('Offices'));
+  // checking data for different actions  
   if(!officeStorageData) {
     let emptyArr = [officeData];
     localStorage.setItem("Offices", JSON.stringify(emptyArr));
@@ -35,6 +39,7 @@ export const createOffice = officeData => dispatch => {
   } else if (officeStorageData.length === 0) {
     localStorage.setItem("Offices", JSON.stringify(officeData));
   }
+  // dispatch the action
   dispatch({
     type: NEW_OFFICE_POST,
     payload: officeData

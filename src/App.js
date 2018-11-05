@@ -16,7 +16,6 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div className="App">
-            
             <Route path='/' exact component={Company}/>
             <Route path='/office' exact component={Office}/>
           </div>

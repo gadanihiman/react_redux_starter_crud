@@ -32,42 +32,57 @@ class Companies extends Component {
     this.props.fetchPosts();
   }
 
+  // function for open confirmation delete modal
   handleClickOpen = (e, id) => this.setState({ openModal: true, idTemp: id });
-
+  // function for close confirmation delete modal
   handleClose = () => this.setState({ openModal: false, idTemp: '' });
 
+  // function for delete office
   deleteOffice = () => {
+    // get all offices
     let allOffices = JSON.parse(localStorage.getItem('Offices'));
+    // find index of office that selected
     let officeSelected = allOffices.findIndex(office => office.id === this.state.idTemp);
+    // delete office data that return deleted office    
     let officesDeleted = allOffices.splice(officeSelected, 1);
+    // set offices storage to empty array
     localStorage.setItem("Offices", JSON.stringify([]));
+    // display notification for deletting office
     this.setState({ open: true, message: `${officesDeleted[0].name} has been deleted!` });
     if (allOffices.length === 0) {
       localStorage.removeItem('Offices');
     } else {
+      // create new offices data from data array that had spliced. Use createOffice redux action
       this.props.createOffice(allOffices);
     }
+    // close confirmation's modal 
     this.handleClose();
   }
 
   render() {
     const { vertical, horizontal, open, message } = this.state;
 
+    // change link and bring id to the location state 
     const officesDetails = (e, companyId) => {
       const { history } = this.props;
       let id = companyId;
       history.push("/office", {id});
     }
     
+    // get all companies data from storage
     var allCompanies = JSON.parse(localStorage.getItem('Companies'));
+    // get all offices data from storage    
     var allOffices = JSON.parse(localStorage.getItem('Offices'));
     
+    // filter all offices data that should be viewed depends of the company id
     const officesData = this.props.location.state
       && allOffices && allOffices.filter(office => office.company === this.props.location.state.id);
-
+    
+    // filter a company data that should be viewed depends of the company id
     const companyDetail = this.props.location.state
       && allCompanies && allCompanies.filter(company => company.id === this.props.location.state.id);
     
+    // Component List of all companies, displayed on card
     const companiesCard = allCompanies && allCompanies.map((post, index) => 
       <Card 
         onClick={e => officesDetails(e, post.id)}
@@ -106,6 +121,7 @@ class Companies extends Component {
       </Card>
     );
 
+    // Component List of all offices, displayed on card
     const officesCard = officesData && officesData.map((office, index) => 
       <Card 
         key={index} 
@@ -146,7 +162,8 @@ class Companies extends Component {
         </CardContent>
       </Card>
     );
-
+    
+    // Container component for listing all of the companies
     const ListCompanies = () => 
       <span>
         <h1>Companies <span style={{ fontSize: '12px' }}> (Click card for see all company's offices) </span> </h1>
@@ -155,6 +172,7 @@ class Companies extends Component {
             : <h3>There is no office created yet</h3>}
       </span>
 
+    // Container component for listing all of the offices with it's company    
     const ListOffices = () => 
       <span>
         <h1>{companyDetail[0].name}</h1>
@@ -195,6 +213,7 @@ class Companies extends Component {
     
     return (
       <div>
+        {/* display snackbar alert/notification */}
         <Snackbar
             anchorOrigin={{ vertical, horizontal }}
             open={open}

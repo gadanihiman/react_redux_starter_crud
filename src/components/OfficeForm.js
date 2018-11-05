@@ -34,18 +34,14 @@ class OfficeForm extends Component {
     errResponse: {}
   };
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.newCompany.response) {
-      this.props.companies.unshift(nextProps.newCompany);
-      this.props.companies.map(company => company.response = null);
-    }
-  }
-
+  // function for change state when typing
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+  // handle submit form
   onSubmit = e => {
     e.preventDefault();
     const {lat, long, name, date, company} = this.state;
+    // check validation for every input
     let response = (name === '' || company === '' || lat === '' 
     || long === '' || date === '' )
       ? {
@@ -57,8 +53,10 @@ class OfficeForm extends Component {
           status : 'error'
         }
       : `Office ${name} created!`;
-    
+
+    // make new id from uuid package
     let id = uuidv1();    
+    // create body post
     const post = {
       id, name,
       location: {
@@ -67,13 +65,17 @@ class OfficeForm extends Component {
       }, date, company, response
     };
 
+    // make time for showing out the modal
     setTimeout(() => this.setState({ open: false }), 5000);
 
+    // check if there's a 'status' property it will handle all each error message, 
+    // otherwise it will send data
     return (post.response.hasOwnProperty('status'))
       ? this.handleError(response)
       : this.postOffice(post);
   }
 
+  // set latitude validation rules
   latValidation = inputStateName =>  {
     var valMessage = null;
     if (inputStateName === '') {
@@ -85,7 +87,7 @@ class OfficeForm extends Component {
     }
     return valMessage;
   }
-
+  // set longitude validation rules
   longValidation = inputStateName =>  {
     var valMessage = null;
     if (inputStateName === '') {
@@ -98,6 +100,7 @@ class OfficeForm extends Component {
     return valMessage;
   }
 
+  // function for send body data to redux action
   postOffice = postData => {
     // reset input data state
     this.setState({
@@ -110,10 +113,11 @@ class OfficeForm extends Component {
       company: '',
       errResponse: {}
     })
-    // post office to redux
+    // post data to local storage using redux action
     this.props.createOffice(postData);
   }
 
+  // handle error message
   handleError = errResponse => {
     this.setState({errResponse})
     // show single first error message with snackbar alert
@@ -128,7 +132,9 @@ class OfficeForm extends Component {
 
   render() {
     const { name, lat, long, date, company, vertical, horizontal, open, errResponse, errMessage } = this.state;
+    // get all companies from local storage
     var allCompanies = JSON.parse(localStorage.getItem('Companies'));
+    // list for all companies for dropdown menu purpose
     const listCompany = allCompanies && allCompanies.map((company, index) => 
       <MenuItem key={index} value={company.id}>{company.name}</MenuItem>);
 
