@@ -241,7 +241,7 @@ class Companies extends Component {
             </Button>
           </DialogActions>
         </Dialog>
-        {this.props.items == 'company'
+        {this.props.items === 'company'
           ? <ListCompanies />
           : <ListOffices />}
       </div>
